@@ -1,0 +1,526 @@
+@import url("https://fonts.cdnfonts.com/css/ica-rubrik-black");
+@import url("https://fonts.cdnfonts.com/css/poppins");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --chakra-blue: #1a4d8bed;
+  --saffron: rgba(255, 153, 51, 0.8);
+  --beige: #f4e3c1;
+  --soft-green: rgba(30, 147, 71, 0.8);
+  --semi-transparent: #d58c3330;
+  --saffron-tint: rgba(255, 153, 51, 0.35);
+  --white-frost: rgba(255, 255, 255, 0.25);
+  --green-tint: rgba(19, 136, 8, 0.35);
+}
+
+body {
+  background-color: var(--chakra-blue);
+  background-image: repeating-linear-gradient(
+      to right,
+      transparent 0 100px,
+      var(--semi-transparent) 100px 101px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0 100px,
+      var(--semi-transparent) 100px 101px
+    );
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  height: 90%;
+  width: min(1400px, 90vw);
+  transform: translateX(-50%);
+  background-image: url(images/bg.png);
+  background-size: 100%;
+  background-position: top center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+
+.hero {
+  width: 100%;
+  height: 100svh;
+  overflow: hidden;
+  text-align: center;
+  position: relative;
+}
+
+.hero .slider {
+  position: absolute;
+  width: 200px;
+  height: 250px;
+  top: 10%;
+  left: calc(50% - 100px);
+  transform-style: preserve-3d;
+  transform: perspective(1000px);
+  animation: autoRun 20s linear infinite;
+  z-index: 2;
+}
+
+@keyframes autoRun {
+  from {
+    transform: perspective(1000px) rotateX(-16deg) rotateY(0);
+  }
+  to {
+    transform: perspective(1000px) rotateX(-16deg) rotateY(360deg);
+  }
+}
+
+.hero .slider .item {
+  position: absolute;
+  inset: 0 0 0 0;
+  transform: rotateY(
+      calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)
+    )
+    translateZ(550px);
+
+  /* Glassmorphism base */
+  background: linear-gradient(
+    to bottom,
+    var(--saffron-tint),
+    var(--white-frost),
+    var(--green-tint)
+  );
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--chakra-blue);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px;
+}
+
+.hero .slider .item img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+.hero .content {
+  position: absolute;
+  bottom: 0;
+  padding-bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1400px, 100vw);
+  height: max-content;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hero .content h1 {
+  font-family: "ICA Rubrik";
+  font-size: 16em;
+  line-height: 1em;
+  color: var(--saffron);
+  position: relative;
+}
+.hero .content h1::after {
+  position: absolute;
+  inset: 0 0 0 0;
+  content: attr(data-content);
+  -webkit-text-stroke: 2px var(--white-frost);
+  color: transparent;
+  z-index: 2;
+}
+.hero .content .subtext {
+  font-family: "Poppins";
+  text-align: right;
+  max-width: 400px;
+  color: whitesmoke;
+}
+.hero .content h2 {
+  font-size: 3em;
+  color: white;
+}
+.hero .content .model {
+  background-image: url(images/model.png);
+  width: 100%;
+  height: 80vh;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  background-position: top center;
+  z-index: 1;
+}
+.hero .content .scroll-down {
+  position: absolute;
+  font-family: "Poppins";
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1rem;
+  color: white;
+  animation: bounce 1.5s infinite, fadeIn 5s ease-in-out forwards;
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translate(-50%, 0);
+  }
+  40% {
+    transform: translate(-50%, -10px);
+  }
+  60% {
+    transform: translate(-50%, -5px);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media screen and (max-width: 1150px) {
+  .hero .slider {
+    width: 180px;
+    height: 220px;
+    left: calc(50% - 90px);
+  }
+  .hero .slider .item {
+    transform: rotateY(
+        calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)
+      )
+      translateZ(430px);
+  }
+  .hero .content h1 {
+    text-align: center;
+    width: 100%;
+    text-shadow: 0 10px 20px #000;
+    font-size: 7em;
+  }
+  .hero .content .subtext {
+    padding: 20px;
+    text-shadow: 0 10px 20px #000;
+    z-index: 2;
+    max-width: unset;
+    width: 100%;
+    text-align: center;
+    padding: 0 30px;
+  }
+}
+@media screen and (max-width: 880px) {
+  .hero .slider {
+    width: 160px;
+    height: 200px;
+    left: calc(50% - 80px);
+  }
+  .hero .slider .item {
+    transform: rotateY(
+        calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)
+      )
+      translateZ(330px);
+  }
+}
+@media screen and (max-width: 700px) {
+  .hero .slider {
+    width: 130px;
+    height: 160px;
+    left: calc(50% - 65px);
+  }
+  .hero .slider .item {
+    transform: rotateY(
+        calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)
+      )
+      translateZ(250px);
+  }
+  .hero .content h1 {
+    font-size: 5em;
+  }
+}
+@media screen and (max-width: 426px) {
+  .hero .slider {
+    width: 100px;
+    height: 120px;
+    left: calc(50% - 50px);
+  }
+  .hero .slider .item {
+    transform: rotateY(
+        calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)
+      )
+      translateZ(150px);
+  }
+  .hero .content h1 {
+    font-size: 5em;
+  }
+  .hero .content h2 {
+    font-size: 2em;
+  }
+  .hero .content .model {
+    background-size: auto 85%;
+  }
+}
+
+/* gallery */
+.gallery {
+  padding: 60px 20px;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+}
+
+.gallery h2 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  color: var(--saffron);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/*India Svg*/
+
+.ind {
+  padding: 60px 20px;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(
+    to bottom,
+    var(--saffron),
+    white,
+    var(--soft-green)
+  );
+}
+.ind h2 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  color: var(--chakra-blue);
+}
+.ind h2 span {
+  color: white;
+  -webkit-text-stroke: 2px var(--white-frost);
+}
+path {
+  fill: none;
+  stroke: black;
+  stroke-width: 1;
+  stroke-dasharray: 5000;
+  stroke-dashoffset: 5000;
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+svg path {
+  fill: transparent;
+  transition: 0.2s ease-in-out;
+}
+svg path:nth-child(odd):hover {
+  fill: #e3641a;
+  cursor: pointer;
+}
+
+svg path:nth-child(even):hover {
+  fill: green;
+  cursor: pointer;
+}
+
+.info-card {
+  position: absolute;
+  background: #ffffff90;
+  color: #000;
+  padding: 15px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  display: none;
+  max-width: 300px;
+  z-index: 1000;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  left: 0;
+  top: 0;
+}
+
+.info-card h3 {
+  margin: 0 0 5px 0;
+  font-size: 1.2em;
+  font-weight: 500;
+}
+.info-card p {
+  margin: 0;
+  font-weight: 300;
+  line-height: 1.4;
+}
+
+/* Card container */
+.card {
+  perspective: 1000px;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+}
+
+.card:hover {
+  cursor: pointer;
+}
+.card:hover .card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Card front & back */
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Front */
+.card-front {
+  background: var(--white-frost);
+  overflow: hidden;
+}
+.card-front img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+.card-front figcaption {
+  padding: 10px;
+  height: 100px;
+  font-size: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Back */
+.card-back {
+  background-color: #f9f9f9;
+  color: #333;
+  transform: rotateY(180deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  .gallery h2 {
+    font-size: 2rem;
+  }
+}
+
+/* india numbers */
+.india-numbers {
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  font-family: "Poppins";
+}
+
+.india-numbers h2 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.india-numbers h2 span {
+  color: var(--saffron);
+}
+
+.india-numbers .intro {
+  max-width: 600px;
+  margin: auto;
+  font-size: 1rem;
+  margin-bottom: 40px;
+}
+
+.numbers-grid {
+  display: grid;
+  max-width: 1200px;
+  margin: auto;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.number-card {
+  background: #f9f9f9;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+  transition: transform 0.3s ease;
+}
+
+.number-card:hover {
+  transform: translateY(-5px);
+}
+
+.number-card .icon {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.number-card .counter {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--soft-green);
+}
+
+.number-card .unit {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.number-card p {
+  font-size: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+  .india-numbers h2 {
+    font-size: 2rem;
+  }
+}
+
+/* footer */
+footer {
+  text-align: center;
+  padding: 60px 20px;
+  font-family: "Poppins";
+  font-size: 1rem;
+  background: linear-gradient(
+    to right,
+    var(--saffron),
+    white,
+    var(--soft-green)
+  );
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+}

@@ -1,3 +1,57 @@
+document.addEventListener("DOMContentLoaded", () => {
+  AOS.init({
+    duration: 800, // Animation speed in ms
+    once: true, // Animate only once
+  });
+
+  document.getElementById("curYear").textContent = new Date().getFullYear();
+
+  const scrollDown = document.querySelector(".scroll-down");
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 50) {
+      scrollDown.style.display = "none";
+    } else {
+      scrollDown.style.display = "";
+    }
+  });
+
+  const counters = document.querySelectorAll(".counter");
+  const speed = 200; // Lower = faster
+
+  const animateCounters = () => {
+    counters.forEach((counter) => {
+      const updateCount = () => {
+        const target = +counter.getAttribute("data-target");
+        const count = +counter.innerText;
+        const increment = target / speed;
+
+        if (count < target) {
+          counter.innerText = Math.ceil(count + increment);
+          setTimeout(updateCount, 20);
+        } else {
+          counter.innerText = target;
+        }
+      };
+      updateCount();
+    });
+  };
+
+  // Trigger when in view
+  const section = document.querySelector(".india-numbers");
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting) {
+        animateCounters();
+        observer.disconnect();
+      }
+    },
+    { threshold: 0.4 }
+  );
+
+  observer.observe(section);
+});
+
 const svgPaths = document.querySelectorAll("svg path");
 const infoCard = document.getElementById("info-card");
 const cardTitle = document.getElementById("card-title");
@@ -187,28 +241,7 @@ const stateData = {
 };
 
 svgPaths.forEach((item) => {
-  if(window.innerWidth < 1000){
-    item.addEventListener("click", (event) => {
-    const stateId = item.id;
-    const data = stateData[stateId];
-
-    if (data) {
-      cardTitle.textContent = data.name;
-      cardDescription.textContent = data.description;
-
-      const x = event.clientX + window.scrollX;
-      const y = event.clientY + window.scrollY;
-      infoCard.style.left = `${x + 15}px`;
-      infoCard.style.top = `${y - infoCard.offsetHeight - 15}px`;
-      infoCard.style.display = "block";
-    }
-  }); 
-
-  item.addEventListener("mouseout", () => {
-    infoCard.style.display = "none";
-  });
-  } else {
-    item.addEventListener("mouseover", (event) => {
+  item.addEventListener("mouseover", (event) => {
     const stateId = item.id;
     const data = stateData[stateId];
 
@@ -227,8 +260,6 @@ svgPaths.forEach((item) => {
   item.addEventListener("mouseout", () => {
     infoCard.style.display = "none";
   });
-  }
-  
 
   const paths = document.querySelectorAll("svg path");
 
